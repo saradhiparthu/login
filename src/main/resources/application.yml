@@ -1,11 +1,25 @@
-server:
-  port: 7070
 spring:
+  server:
+    port: 8081
   application:
-    name: login
+    name: login-service
   config:
     import: configserver:http://localhost:8888
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+  cloud:
+    config:
+      uri: http://localhost:8888
+  datasource:
+    url: jdbc:mysql://localhost:3306/e-commerce?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # or create-drop, validate, none based on your needs
+    show-sql: true # Optional: to show SQL queries in logs
+jwt:
+  secret: "mysecretkey"    # Secret key for signing JWTs
+  expiration: 86400000
+logging:
+  level:
+    org.springframework.security: DEBUG
